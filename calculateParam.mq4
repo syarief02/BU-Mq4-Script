@@ -23,7 +23,9 @@ void OnStart() {
    Print("####### Min Distance: ", b);
    Print("####### TP: ", a);
 }
-//+------------------------------------------------------------------+)
+
+//+------------------------------------------------------------------+
+//|    AUTO CONFIG FUNCTION                                                              |
 //+------------------------------------------------------------------+
 void calcParam(double &TPCurr, double &minPipStepCurr, double &PipStepIncrCurr, double &maxPipStepCurr) {
 //   Print("Eu symbol Data --------------------------------------------------------------");
@@ -34,14 +36,14 @@ void calcParam(double &TPCurr, double &minPipStepCurr, double &PipStepIncrCurr, 
    else
       pipsEu = ticksizeEu;
 // initialize LotDigits
-   double EUMAHI = iMA("EURUSD", PERIOD_D1, 20, 0, MODE_SMA, PRICE_HIGH, 0);
-   double EUMALO = iMA("EURUSD", PERIOD_D1, 20, 0, MODE_SMA, PRICE_LOW, 0);
-   /*  Print(" EU MA Hi : ", EUMAHI);
-     Print(" EU MA Lo : ", EUMALO);
-     Print("Current Symbol : ", Symbol());
-     Print("Pips EU: ", pipsEu);
-   */  double ADREu = (EUMAHI - EUMALO) / pipsEu;
-//  Print("ADR Pips EU : ", ADREu);
+   double EUMAHI = iMA("EURUSD", PERIOD_D1, (365), 0, MODE_SMA, PRICE_HIGH, 0);
+   double EUMALO = iMA("EURUSD", PERIOD_D1, (365), 0, MODE_SMA, PRICE_LOW, 0);
+   Print(" EU MA Hi : ", EUMAHI);
+   Print(" EU MA Lo : ", EUMALO);
+   Print("Current Symbol : ", Symbol());
+   Print("Pips EU: ", pipsEu);
+   double ADREu = ((EUMAHI - EUMALO) / pipsEu);
+   Print("ADR Pips EU : ", ADREu);
    double TPEuDiv = ADREu / 25;
    double minPipStepDiv = ADREu / 4;
    double PipStepIncrDiv = ADREu / 2;
@@ -52,8 +54,8 @@ void calcParam(double &TPCurr, double &minPipStepCurr, double &PipStepIncrCurr, 
      Print("max pipstep Div : ", maxPipStepDiv);
      Print("current symbol stat --------------------------------------------------------------");
    */  //+------------------------------------------------------------------+
-   //|                                                                  |
-   //+------------------------------------------------------------------+
+//|                                                                  |
+//+------------------------------------------------------------------+
    double pipsCurr;
    double ticksize = MarketInfo(Symbol(), MODE_TICKSIZE);
    if(ticksize == 0.00001 || ticksize == 0.001)
@@ -63,11 +65,11 @@ void calcParam(double &TPCurr, double &minPipStepCurr, double &PipStepIncrCurr, 
 // initialize LotDigits
    double CurrMAHI = iMA(Symbol(), PERIOD_D1, 20, 0, MODE_SMA, PRICE_HIGH, 0);
    double CurrMALO = iMA(Symbol(), PERIOD_D1, 20, 0, MODE_SMA, PRICE_LOW, 0);
-   /*  Print(" EU MA Hi : ", CurrMAHI);
-     Print(" EU MA Lo : ", CurrMALO);
-     Print("Current Symbol : ", Symbol());
-     Print("Pips Curr: ", pipsCurr);
-   */   double ADRCurr = (CurrMAHI - CurrMALO) / pipsCurr;
+   Print(" EU MA Hi : ", CurrMAHI);
+   Print(" EU MA Lo : ", CurrMALO);
+   Print("Current Symbol : ", Symbol());
+   Print("Pips Curr: ", pipsCurr);
+   double ADRCurr = (CurrMAHI - CurrMALO) / pipsCurr;
    Print("ADR Pips Curr : ", ADRCurr);
    TPCurr = ADRCurr / TPEuDiv;
    minPipStepCurr = ADRCurr / minPipStepDiv;
