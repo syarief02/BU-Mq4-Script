@@ -16,14 +16,14 @@ void OnStart()
 // Call the FindFirstOpenPositionEntryPrice function to update first entry prices
    FindFirstOpenPositionEntryPrice();
 // Now you can access the first entry prices for buy and sell
-   if(firstBuyEntryPrice != 0.0)
-     {
-      // First buy entry price for the current symbol
-     }
-   if(firstSellEntryPrice != 0.0)
-     {
-      // First sell entry price for the current symbol
-     }
+//if(firstBuyEntryPrice != 0.0)
+//  {
+//   // First buy entry price for the current symbol
+//  }
+//if(firstSellEntryPrice != 0.0)
+//  {
+//   // First sell entry price for the current symbol
+//  }
 // Use these prices for setting SL for subsequent positions or any other logic.
    Print("firstBuyPrice : " + DoubleToString(firstBuyEntryPrice) + " | ###################  ",
          "\nfirstSellPrice : " + DoubleToString(firstSellEntryPrice) + " | ###################  ");
