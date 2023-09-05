@@ -10,6 +10,7 @@
 //+------------------------------------------------------------------+
 //| Script program start function                                    |
 //+------------------------------------------------------------------+
+input string BaseSymbol = "EURUSD";
 void OnStart() {
 //---
    double a;
@@ -28,16 +29,40 @@ void OnStart() {
 //|    AUTO CONFIG FUNCTION                                                              |
 //+------------------------------------------------------------------+
 void calcParam(double &TPCurr, double &minPipStepCurr, double &PipStepIncrCurr, double &maxPipStepCurr) {
+//+------------------------------------------------------------------+
+//| Detect EURUSD Automatically                                      |
+//+------------------------------------------------------------------+
+   int totalSymbols = SymbolsTotal(false);
+   string eurusdVariation = "";
+// Loop through all symbols in the market watch
+   for (int i = 0; i < totalSymbols; i++) {
+      string symbolName = SymbolName(i, false);
+      if (StringFind(symbolName, BaseSymbol) != -1) {
+         eurusdVariation = symbolName;
+         Print("Detected EURUSD variation: ", eurusdVariation);
+         break;
+      }
+   }
+   if (eurusdVariation == "") {
+      Print("No available EURUSD variation found.");
+      return;
+   }
+   double eurusdPrice = SymbolInfoDouble(eurusdVariation, SYMBOL_BID);
+   if (eurusdPrice == 0) {
+      Print("Unable to retrieve price for detected EURUSD variation: ", eurusdVariation);
+      return;
+   }
+// Now you have the EURUSD price, perform your TP calculation
 //   Print("Eu symbol Data --------------------------------------------------------------");
    double pipsEu;
-   double ticksizeEu = MarketInfo("EURUSD", MODE_TICKSIZE);
+   double ticksizeEu = MarketInfo(eurusdVariation, MODE_TICKSIZE);
    if(ticksizeEu == 0.00001 || ticksizeEu == 0.001)
       pipsEu = ticksizeEu * 10;
    else
       pipsEu = ticksizeEu;
 // initialize LotDigits
-   double EUMAHI = iMA("EURUSD", PERIOD_D1, (365), 0, MODE_SMA, PRICE_HIGH, 0);
-   double EUMALO = iMA("EURUSD", PERIOD_D1, (365), 0, MODE_SMA, PRICE_LOW, 0);
+   double EUMAHI = iMA(eurusdVariation, PERIOD_D1, (365), 0, MODE_SMA, PRICE_HIGH, 0);
+   double EUMALO = iMA(eurusdVariation, PERIOD_D1, (365), 0, MODE_SMA, PRICE_LOW, 0);
    Print(" EU MA Hi : ", EUMAHI);
    Print(" EU MA Lo : ", EUMALO);
    Print("Current Symbol : ", Symbol());
