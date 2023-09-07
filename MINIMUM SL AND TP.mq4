@@ -26,9 +26,9 @@ void OnStart()
       minSLTP = MarketInfo(Symbol(), MODE_STOPLEVEL);
       Spread = MarketInfo(Symbol(), MODE_SPREAD);
      }
-   Print(Symbol() + "MINIMUM TP: " + DoubleToString(minSLTP) + " PIPS");
-   Print(Symbol() + "MINIMUM SL: " + DoubleToString(minSLTP + Spread) + " PIPS");
-   Print(Symbol() + "SPREAD: " + DoubleToString(Spread) + " PIPS");
+   Print(Symbol() + " MINIMUM TP: " + DoubleToString(NormalizeDouble(minSLTP)) + " PIPS");
+   Print(Symbol() + " MINIMUM SL: " + DoubleToString(minSLTP + Spread) + " PIPS");
+   Print(Symbol() + " SPREAD: " + DoubleToString(Spread) + " PIPS");
 //Print(Symbol() + ": " + DoubleToString(ticksize) + " ticksize");
 //Print(Symbol() + ": " + DoubleToString(pips) + " pips");
   }
