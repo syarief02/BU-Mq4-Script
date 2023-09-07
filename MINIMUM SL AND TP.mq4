@@ -10,9 +10,21 @@
 //+------------------------------------------------------------------+
 //| Script program start function                                    |
 //+------------------------------------------------------------------+
-void OnStart() {
+void OnStart()
+  {
 //---
-   double minSLTP = MarketInfo(Symbol(), MODE_STOPLEVEL);
-   Print(Symbol() + ": " + minSLTP);
-}
+   double minSLTP;
+   double ticksize = MarketInfo(Symbol(), MODE_TICKSIZE);
+   if(ticksize == 0.00001 || ticksize == 0.001)
+     {
+      minSLTP = (MarketInfo(Symbol(), MODE_STOPLEVEL)) / 10;
+     }
+   else
+     {
+      minSLTP = MarketInfo(Symbol(), MODE_STOPLEVEL);
+     }
+   Print(Symbol() + ": " + DoubleToString(minSLTP) + " PIPS");
+//Print(Symbol() + ": " + DoubleToString(ticksize) + " ticksize");
+//Print(Symbol() + ": " + DoubleToString(pips) + " pips");
+  }
 //+------------------------------------------------------------------+
